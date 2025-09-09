@@ -1,49 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blackjack Game</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Password screen -->
-  <div id="password-screen">
-    <h2>Enter Password</h2>
-    <input type="password" id="password-input" placeholder="Enter Password">
-    <button onclick="checkPassword()">Enter</button>
-    <p id="password-message"></p>
+<div id="game-screen" style="display:none;">
+  <h1>Blackjack</h1>
+  <div class="balance">Balance: ₹<span id="balance">0</span></div>
 
-    <!-- Balance setup (this was missing) -->
-    <div id="balance-setup" style="display:none; margin-top:20px;">
-      <h3>Set Your Balance (Max ₹200000)</h3>
-      <input type="number" id="balance-input" placeholder="Enter Balance" min="1" max="200000">
-      <button onclick="setBalance()">Start Game</button>
-    </div>
+  <!-- Bet setup -->
+  <div class="bet-box">
+    <label>Bet Amount: ₹</label>
+    <input type="number" id="bet-input" value="1000" min="1">
   </div>
 
-  <!-- Game screen -->
-  <div id="game-screen" style="display:none;">
-    <h1>Blackjack</h1>
-    <div class="balance">Balance: ₹<span id="balance">0</span></div>
-    <div class="table">
-      <div class="hand" id="dealer-hand">
-        <h2>Dealer</h2>
-        <div class="cards" id="dealer-cards"></div>
-      </div>
-      <div class="hand" id="player-hand">
-        <h2>You</h2>
-        <div class="cards" id="player-cards"></div>
-      </div>
+  <div class="table">
+    <div class="hand" id="dealer-hand">
+      <h2>Dealer</h2>
+      <div class="cards" id="dealer-cards"></div>
     </div>
-    <div class="controls">
-      <button id="deal-btn" onclick="startGame()">Deal</button>
-      <button id="hit-btn" onclick="hit()" disabled>Hit</button>
-      <button id="stand-btn" onclick="stand()" disabled>Stand</button>
+    <div class="hand" id="player-hand">
+      <h2>You</h2>
+      <div class="cards" id="player-cards"></div>
     </div>
-    <div id="message"></div>
   </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+  <div class="controls">
+    <button id="deal-btn" onclick="startGame()">Deal</button>
+    <button id="hit-btn" onclick="hit()" disabled>Hit</button>
+    <button id="stand-btn" onclick="stand()" disabled>Stand</button>
+  </div>
+  <div id="message"></div>
+</div>

@@ -1,0 +1,100 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #064420;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2 {
+  margin: 10px 0;
+}
+
+#password-screen {
+  margin-top: 100px;
+}
+
+#password-screen input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+#password-screen button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #1abc9c;
+  color: white;
+  cursor: pointer;
+}
+
+.table {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px auto;
+  padding: 20px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  background: #006400;
+  width: 90%;
+  max-width: 800px;
+}
+
+.hand {
+  flex: 1;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 60px;
+  height: 90px;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  transform: translateY(-50px);
+  opacity: 0;
+  animation: deal 0.5s forwards;
+}
+
+@keyframes deal {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.controls button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #e67e22;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.balance {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+#message {
+  font-size: 22px;
+  margin-top: 20px;
+  font-weight: bold;
+}

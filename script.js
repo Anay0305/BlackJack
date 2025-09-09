@@ -1,14 +1,28 @@
-let deck, playerHand, dealerHand, balance = 50000;
+let deck, playerHand, dealerHand, balance = 0;
 const balanceDisplay = document.getElementById("balance");
+let hideDealerCard = true;
 
 function checkPassword() {
   const input = document.getElementById("password-input").value;
   if(input === "GARVIT100"){
-    document.getElementById("password-screen").style.display = "none";
-    document.getElementById("game-screen").style.display = "block";
+    document.getElementById("password-message").innerText = "Password Accepted!";
+    document.getElementById("balance-setup").style.display = "block";
   } else {
     document.getElementById("password-message").innerText = "Wrong Password!";
   }
+}
+
+function setBalance(){
+  let inputBalance = parseInt(document.getElementById("balance-input").value);
+  if(isNaN(inputBalance) || inputBalance < 1){
+    alert("Enter a valid balance!");
+    return;
+  }
+  if(inputBalance > 200000) inputBalance = 200000;
+  balance = inputBalance;
+  balanceDisplay.innerText = balance;
+  document.getElementById("password-screen").style.display = "none";
+  document.getElementById("game-screen").style.display = "block";
 }
 
 function createDeck() {
@@ -47,12 +61,20 @@ function renderHands(){
   const playerCards = document.getElementById("player-cards");
   dealerCards.innerHTML = '';
   playerCards.innerHTML = '';
-  dealerHand.forEach(card => {
+
+  dealerHand.forEach((card, i) => {
     const div = document.createElement("div");
     div.className = "card";
-    div.innerText = card.value + card.suit;
+    if(i === 1 && hideDealerCard){ 
+      div.innerText = "🂠"; // hidden card
+      div.style.background = "black";
+      div.style.color = "white";
+    } else {
+      div.innerText = card.value + card.suit;
+    }
     dealerCards.appendChild(div);
   });
+
   playerHand.forEach(card => {
     const div = document.createElement("div");
     div.className = "card";
@@ -65,6 +87,7 @@ function startGame(){
   deck = createDeck();
   playerHand = [deck.pop(), deck.pop()];
   dealerHand = [deck.pop(), deck.pop()];
+  hideDealerCard = true;
   renderHands();
   document.getElementById("deal-btn").disabled = true;
   document.getElementById("hit-btn").disabled = false;
@@ -83,12 +106,17 @@ function hit(){
 }
 
 function stand(){
+  hideDealerCard = false;
+  renderHands();
+
   while(handValue(dealerHand) < 17){
     dealerHand.push(deck.pop());
+    renderHands();
   }
-  renderHands();
+
   const playerTotal = handValue(playerHand);
   const dealerTotal = handValue(dealerHand);
+
   if(dealerTotal > 21 || playerTotal > dealerTotal){
     document.getElementById("message").innerText = "You Win!";
     balance += 1000;

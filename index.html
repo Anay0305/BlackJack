@@ -3,45 +3,68 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Private Blackjack — Password Protected</title>
+<title>Animated Blackjack — Private</title>
 <style>
   :root{
-    --bg:#0f1724; --card:#fff; --accent:#0b76ff; --panel:#0b1220;
-    --muted:#94a3b8;
+    --bg:#0a2a1f; --table:#0f3b2e; --panel:rgba(255,255,255,0.03);
+    --accent:#ffd166; --muted:#b5c5b8;
   }
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;color:#e6eef6;background:linear-gradient(180deg,#071125 0%, #0b1728 100%);-webkit-font-smoothing:antialiased}
-  .center{display:flex;align-items:center;justify-content:center;height:100%;padding:24px;box-sizing:border-box}
-  .card-wrap{width:100%;max-width:1100px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border-radius:14px;padding:18px;box-shadow:0 10px 40px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
-  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-  header h1{margin:0;font-size:18px;letter-spacing:0.2px}
-  .credits{font-weight:700;color:var(--accent)}
-  /* layout */
-  .board{display:grid;grid-template-columns:1fr 360px;gap:16px}
-  @media(max-width:920px){ .board{grid-template-columns:1fr} }
-  .play-area{background:rgba(255,255,255,0.02);border-radius:10px;padding:14px;min-height:360px}
-  .controls{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
-  .btn{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
-  .btn:disabled{opacity:0.45;cursor:not-allowed}
-  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:10px;padding:12px}
-  .hand{display:flex;gap:10px;align-items:flex-start;min-height:120px}
-  .card{width:78px;height:110px;border-radius:10px;background:var(--card);display:flex;flex-direction:column;justify-content:space-between;padding:8px;box-shadow:0 6px 18px rgba(2,6,23,0.45);font-weight:800}
-  .card .top,.card .bottom{font-size:16px;color:#111}
-  .card .center{font-size:28px;text-align:center;color:#111}
-  .small{font-size:13px;color:var(--muted)}
-  .status{margin-top:10px;font-weight:800;font-size:16px}
-  /* password modal */
-  #entry{position:fixed;inset:0;background:linear-gradient(180deg, rgba(1,6,15,0.8), rgba(2,9,24,0.95));display:flex;align-items:center;justify-content:center;z-index:9999}
-  #entry .box{width:100%;max-width:420px;background:linear-gradient(180deg,#071225,#071225);padding:26px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);text-align:center;color:#e6eef6}
-  #entry input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);margin-top:12px;background:transparent;color:#fff}
-  #entry button{margin-top:12px;padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,#05221a,#061b16);color:#eaf6ee;-webkit-font-smoothing:antialiased}
+  /* ENTRY */
+  #entry{position:fixed;inset:0;background:linear-gradient(180deg,rgba(2,8,6,0.9),rgba(2,8,6,0.95));display:flex;align-items:center;justify-content:center;z-index:9999}
+  #entry .box{width:100%;max-width:460px;background:linear-gradient(180deg,#0b362a,#07261f);padding:28px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);text-align:center}
+  #entry h2{margin:0 0 8px 0;font-size:20px}
+  #entry input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;margin-top:12px}
+  #entry button{margin-top:14px;padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#08201a;font-weight:800;cursor:pointer}
   #entry .hint{margin-top:8px;color:var(--muted);font-size:13px}
-  /* animations */
-  .card.deal{transform:translateY(-8px);transition:transform 150ms ease}
-  footer{margin-top:14px;font-size:12px;color:var(--muted)}
-  .log-list{max-height:220px;overflow:auto;margin-top:8px;padding:6px;background:rgba(0,0,0,0.12);border-radius:8px}
-  .log-item{font-size:12px;padding:6px;border-bottom:1px dashed rgba(255,255,255,0.02);color:#cfe6ff}
-  .top-row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+  /* APP */
+  .wrap{display:flex;justify-content:center;padding:18px}
+  .table{width:100%;max-width:1100px;background:linear-gradient(180deg,var(--table),#0a3a2d);border-radius:14px;padding:18px;border:1px solid rgba(0,0,0,0.4);box-shadow:0 18px 60px rgba(0,0,0,0.6)}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  header h1{margin:0;font-size:20px}
+  .credits{font-weight:800;color:var(--accent)}
+  .board{position:relative;height:520px;display:flex;gap:16px}
+  .left{flex:1;position:relative}
+  .sidebar{width:320px}
+  .panel{background:var(--panel);padding:12px;border-radius:10px}
+  /* deck area */
+  .deck-area{position:absolute;left:50%;top:22%;transform:translateX(-50%);width:140px;height:180px;display:flex;align-items:center;justify-content:center;pointer-events:none}
+  .deck-stack{width:86px;height:118px;border-radius:10px;background:#072d22;border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+  /* seat areas */
+  .dealer-zone{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:90%;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .player-zone{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);width:90%;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .hand{display:flex;gap:12px;align-items:flex-start;min-height:140px}
+  /* animated card element */
+  .card-el{
+    width:92px;height:128px;border-radius:10px;background:#fff;color:#081315;border:1px solid #ddd;position:absolute;left:0;top:0;transform-origin:center center;
+    display:flex;flex-direction:column;justify-content:space-between;padding:8px;font-weight:900;box-shadow:0 12px 30px rgba(0,0,0,0.6);
+    transition:transform 380ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+    will-change:transform,opacity;
+    z-index:5;
+  }
+  .card-face{font-size:16px}
+  .card-suit{font-size:28px;text-align:center;margin-top:8px}
+  .card-back{background:linear-gradient(135deg,#123b2e,#0b6b4f);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+  /* small UI */
+  .controls{display:flex;gap:8px;align-items:center;margin-top:16px;flex-wrap:wrap}
+  .btn{padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#08201a;font-weight:800;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#eaf6ee}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .status{margin-top:10px;font-weight:800;color:#fff}
+  .hand-value{font-weight:800;margin-top:6px;color:var(--muted)}
+  /* sidebar */
+  .log-list{max-height:260px;overflow:auto;margin-top:8px;padding:6px;background:rgba(0,0,0,0.12);border-radius:8px}
+  .log-item{font-size:13px;padding:6px;border-bottom:1px dashed rgba(255,255,255,0.02);color:#d7f3d9}
+  .chips{display:flex;gap:8px;align-items:center;margin-top:10px}
+  .chip{width:44px;height:28px;border-radius:6px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;color:#073225}
+  footer{margin-top:12px;color:var(--muted);font-size:13px}
+  /* small responsive tweaks */
+  @media(max-width:960px){
+    .board{flex-direction:column;height:auto}
+    .sidebar{width:100%}
+    .deck-area{top:16%}
+  }
 </style>
 </head>
 <body>
@@ -50,152 +73,144 @@
     <h2>Private Blackjack — Enter Password</h2>
     <input id="pw" type="password" placeholder="Enter Password" autofocus />
     <button id="enterBtn">Enter</button>
-    <div class="hint">This page is private. Contact owner for changes.</div>
+    <div class="hint">Password provided by owner</div>
     <div id="pwMsg" style="color:#ffb4b4;margin-top:8px;font-weight:700"></div>
   </div>
 </div>
 
-<div class="center" id="app" style="display:none">
-  <div class="card-wrap">
+<div class="wrap" id="app" style="display:none">
+  <div class="table">
     <header>
       <h1>Blackjack — Private Table</h1>
       <div class="credits">Credits: ₹ <span id="credits">1000</span></div>
     </header>
 
     <div class="board">
-      <div class="play-area panel">
-        <div class="top-row">
-          <div>
-            <div class="small">Dealer</div>
-            <div id="dealerHand" class="hand" aria-live="polite"></div>
-            <div id="dealerValue" class="small">Value: ?</div>
-          </div>
-          <div>
-            <div class="small">Player</div>
-            <div id="playerHand" class="hand" aria-live="polite"></div>
-            <div id="playerValue" class="small">Value: ?</div>
+      <div class="left">
+        <div class="dealer-zone panel" id="dealerZone">
+          <div style="font-size:14px;color:var(--muted)">Dealer</div>
+          <div id="dealerHand" class="hand"></div>
+          <div id="dealerValue" class="hand-value">Value: ?</div>
+        </div>
+
+        <div class="deck-area" aria-hidden="true">
+          <div class="deck-stack" id="deckStack">Deck</div>
+        </div>
+
+        <div class="player-zone panel" id="playerZone">
+          <div style="font-size:14px;color:var(--muted)">Player</div>
+          <div id="playerHand" class="hand"></div>
+          <div id="playerValue" class="hand-value">Value: 0</div>
+        </div>
+
+        <div style="padding:12px;display:flex;justify-content:center">
+          <div class="controls">
+            <input id="bet" type="number" value="50" min="1" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);width:120px;background:transparent;color:#fff">
+            <button id="dealBtn" class="btn">Deal</button>
+            <button id="hitBtn" class="btn ghost" disabled>Hit</button>
+            <button id="standBtn" class="btn ghost" disabled>Stand</button>
+            <button id="resetBtn" class="btn ghost">Reset Credits</button>
           </div>
         </div>
 
-        <div class="controls" style="margin-top:18px">
-          <label class="small">Bet: ₹
-            <input id="bet" type="number" value="50" min="1" style="width:120px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff" />
-          </label>
-          <button id="dealBtn" class="btn">Deal</button>
-          <button id="hitBtn" class="btn ghost" disabled>Hit</button>
-          <button id="standBtn" class="btn ghost" disabled>Stand</button>
-          <button id="resetBtn" class="btn ghost">Reset Credits</button>
+        <div style="padding:12px;text-align:center">
+          <div id="status" class="status">Press <strong>Deal</strong> to start — enjoy!</div>
         </div>
-
-        <div class="status" id="status">Welcome — press Deal to start</div>
-        <footer class="small">Fair, client-side crypto RNG (browser). For production/legal use, integrate server RNG, KYC & payments.</footer>
       </div>
 
-      <aside class="panel">
+      <aside class="sidebar panel">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <div><strong>Round log</strong><div class="small">auditable local logs (localStorage)</div></div>
+          <div><strong>Round logs</strong><div class="small">Saved locally</div></div>
           <div><button id="exportBtn" class="btn ghost">Export</button></div>
         </div>
-        <div class="log-list" id="logList" aria-live="polite"></div>
+        <div class="log-list" id="logList"></div>
 
-        <div style="margin-top:12px">
-          <div class="small">Controls</div>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <button id="toggleSound" class="btn ghost">Sound: On</button>
+        <div class="panel" style="margin-top:12px">
+          <div class="small">Quick chips</div>
+          <div class="chips">
+            <div class="chip" data-bet="10">10</div>
+            <div class="chip" data-bet="50">50</div>
+            <div class="chip" data-bet="100">100</div>
+            <div class="chip" data-bet="500">500</div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
             <button id="clearLogs" class="btn ghost">Clear Logs</button>
+            <button id="toggleSound" class="btn ghost">Sound: On</button>
           </div>
         </div>
 
+        <footer>
+          <div class="small">Client-only demo. For certified production use server RNG, KYC, payments.</div>
+        </footer>
       </aside>
     </div>
   </div>
 </div>
 
 <script>
-/* ---------- PASSWORD GATE ---------- */
+/* ===== PASSWORD GATE ===== */
 const ENTRY_PASS = "Welcome100";
 const entryEl = document.getElementById('entry');
 const appEl = document.getElementById('app');
 const pwInput = document.getElementById('pw');
-const msg = document.getElementById('pwMsg');
 const enterBtn = document.getElementById('enterBtn');
+const pwMsg = document.getElementById('pwMsg');
 
-function unlockUI(){
+function unlock(){
   sessionStorage.setItem('bj_access','1');
   entryEl.style.display='none';
   appEl.style.display='flex';
 }
-enterBtn.addEventListener('click', ()=>{
-  const v = pwInput.value || '';
-  if(v === ENTRY_PASS){
-    unlockUI();
-    initGame();
-  } else {
-    msg.textContent = 'Incorrect password';
-    pwInput.value='';
-    pwInput.focus();
-  }
+enterBtn.addEventListener('click', ()=> {
+  if(pwInput.value === ENTRY_PASS){ unlock(); init(); } else { pwMsg.textContent='Incorrect password'; pwInput.value=''; pwInput.focus(); }
 });
-pwInput.addEventListener('keydown',(e)=>{ if(e.key==='Enter') enterBtn.click(); });
+pwInput.addEventListener('keydown', (e)=> { if(e.key==='Enter') enterBtn.click(); });
+if(sessionStorage.getItem('bj_access')==='1'){ entryEl.style.display='none'; appEl.style.display='flex'; setTimeout(init,50); }
 
-// auto-unlock if session active
-if(sessionStorage.getItem('bj_access') === '1'){
-  entryEl.style.display='none';
-  appEl.style.display='flex';
-  setTimeout(initGame,50);
+/* ===== AUDIO (WebAudio beep/chip) ===== */
+let audioCtx = null;
+function playBeep(freq=440, time=0.06, vol=0.09){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type='sine'; o.frequency.value = freq;
+    g.gain.value = vol;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start();
+    o.stop(audioCtx.currentTime + time);
+  }catch(e){}
 }
 
-/* ---------- GAME ENGINE ---------- */
-
-/* fast, cryptographically seeded shuffle via window.crypto */
+/* ===== CRYPTO-SHUFFLE ===== */
 function secureShuffle(array){
-  // Fisher-Yates using crypto.getRandomValues
   const a = array.slice();
   for(let i=a.length-1;i>0;i--){
-    // get random 32-bit unsigned, scale
     const r = crypto.getRandomValues(new Uint32Array(1))[0] / 0xFFFFFFFF;
     const j = Math.floor(r * (i+1));
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
 }
-
 function newDeck(){
   const suits = ['♠','♥','♦','♣'];
   const vals = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-  const deck = [];
+  const deck=[];
   for(const s of suits) for(const v of vals) deck.push({s,v});
   return secureShuffle(deck);
 }
-
-function cardValue(c){
-  if(c.v === 'A') return [1,11];
-  if(['J','Q','K'].includes(c.v)) return 10;
-  return parseInt(c.v,10);
-}
 function handValue(hand){
-  let total = 0, aces = 0;
+  let total=0, aces=0;
   for(const c of hand){
-    if(c.v === 'A'){ aces++; total += 1; } else total += (Array.isArray(cardValue(c)) ? 0 : cardValue(c)) || cardValue(c);
+    if(c.v==='A'){ aces++; total+=1; }
+    else if(['J','Q','K'].includes(c.v)) total += 10;
+    else total += Number(c.v);
   }
-  // upgrade some aces to 11 if possible
-  for(let i=0;i<aces;i++){
-    if(total + 10 <= 21) total += 10;
-  }
+  for(let i=0;i<aces;i++) if(total+10 <=21) total += 10;
   return total;
 }
 
-/* ---------- UI & State ---------- */
-let state = {
-  deck: [],
-  player: [],
-  dealer: [],
-  bet: 50,
-  credits: Number(localStorage.getItem('bj_credits') || 1000),
-  inRound: false,
-  sound: true
-};
-
+/* ===== DOM refs & state ===== */
 const creditsEl = document.getElementById('credits');
 const dealerHandEl = document.getElementById('dealerHand');
 const playerHandEl = document.getElementById('playerHand');
@@ -207,13 +222,24 @@ const hitBtn = document.getElementById('hitBtn');
 const standBtn = document.getElementById('standBtn');
 const resetBtn = document.getElementById('resetBtn');
 const betInput = document.getElementById('bet');
+const deckStackEl = document.getElementById('deckStack');
 const logList = document.getElementById('logList');
 const exportBtn = document.getElementById('exportBtn');
 const clearLogsBtn = document.getElementById('clearLogs');
 const toggleSoundBtn = document.getElementById('toggleSound');
 
-function saveCredits(){ localStorage.setItem('bj_credits', String(state.credits)); creditsEl.textContent = state.credits; }
+let state = {
+  deck: [],
+  player: [],
+  dealer: [],
+  inRound: false,
+  bet: 50,
+  credits: Number(localStorage.getItem('bj_credits')||1000),
+  sound: (localStorage.getItem('bj_sound')||'1')==='1'
+};
 
+/* helper: save credits & logs */
+function saveCredits(){ localStorage.setItem('bj_credits', String(state.credits)); creditsEl.textContent = state.credits; }
 function pushLog(obj){
   const logs = JSON.parse(localStorage.getItem('bj_logs')||'[]');
   obj.ts = new Date().toISOString();
@@ -221,120 +247,269 @@ function pushLog(obj){
   localStorage.setItem('bj_logs', JSON.stringify(logs.slice(0,500)));
   renderLogs();
 }
-
 function renderLogs(){
   const logs = JSON.parse(localStorage.getItem('bj_logs')||'[]');
-  logList.innerHTML = logs.slice(0,200).map(l=>`<div class="log-item">[${l.ts}] ${l.event} — ${l.note || ''}</div>`).join('');
+  logList.innerHTML = logs.slice(0,200).map(l => `<div class="log-item">[${l.ts}] ${l.event} ${l.note?('- '+l.note):''}</div>`).join('');
 }
 
-function renderHands(){
-  // dealer: show hole as ? when inRound and not revealed
-  dealerHandEl.innerHTML = '';
-  playerHandEl.innerHTML = '';
-  const showDealerHole = !state.inRound;
-  state.dealer.forEach((c,i)=>{
-    const card = document.createElement('div'); card.className='card';
-    if(i===1 && state.inRound && !showDealerHole){
-      card.innerHTML = `<div class="top">?</div><div class="center" style="font-size:20px">?</div><div class="bottom">?</div>`;
-      card.style.background = '#111827'; card.style.color='#fff';
-    } else {
-      card.innerHTML = `<div class="top">${c.v}${c.s}</div><div class="center">${c.s}</div><div class="bottom">${c.v}${c.s}</div>`;
-    }
-    dealerHandEl.appendChild(card);
+/* ===== Animated dealing =====
+   We create a floating .card-el at deck position, then transform it to target position.
+   For smoothness we calculate boundingClientRect and apply translate/rotate.
+*/
+function makeFloatingCard(contentHTML){
+  const el = document.createElement('div');
+  el.className = 'card-el';
+  el.innerHTML = contentHTML;
+  el.style.opacity = '0';
+  document.body.appendChild(el);
+  return el;
+}
+function getDeckCenter(){
+  const r = deckStackEl.getBoundingClientRect();
+  return { x: r.left + r.width/2, y: r.top + r.height/2 };
+}
+function getTargetPos(targetEl){
+  const r = targetEl.getBoundingClientRect();
+  return { x: r.left + r.width/2, y: r.top + r.height/2 };
+}
+function placeCardAbsolute(el, x, y){
+  el.style.left = (x - el.offsetWidth/2) + 'px';
+  el.style.top = (y - el.offsetHeight/2) + 'px';
+}
+function animateMove(el, from, to, rotateDeg=0, delay=0){
+  return new Promise(res=>{
+    placeCardAbsolute(el, from.x, from.y);
+    requestAnimationFrame(()=>{ // allow paint
+      el.style.opacity = '1';
+      el.style.transform = `translate(${to.x-from.x}px, ${to.y-from.y}px) rotate(${rotateDeg}deg) scale(1)`;
+      setTimeout(()=>{ res(); }, 420 + delay);
+    });
   });
-  state.player.forEach(c=>{
-    const card = document.createElement('div'); card.className='card';
-    card.innerHTML = `<div class="top">${c.v}${c.s}</div><div class="center">${c.s}</div><div class="bottom">${c.v}${c.s}</div>`;
-    playerHandEl.appendChild(card);
-  });
-  dealerValueEl.textContent = 'Value: ' + (state.inRound ? '?' : handValue(state.dealer));
-  playerValueEl.textContent = 'Value: ' + handValue(state.player);
 }
 
-/* ---------- Game actions ---------- */
+/* create card inner HTML */
+function cardInnerHTML(card, showBack=false){
+  if(showBack){
+    return `<div class="card-back">🂠</div>`;
+  } else {
+    return `<div class="card-face"><div class="card-face top">${card.v}${card.s}</div><div class="card-suit">${card.s}</div><div class="card-face bottom">${card.v}${card.s}</div></div>`;
+  }
+}
 
-function startRound(){
-  const bet = Math.max(1, Math.floor(Number(betInput.value) || 1));
-  if(bet > state.credits){ statusEl.textContent = 'Not enough credits'; return; }
+/* draw sequence: deal 4 cards (P, D, P, D) with animations */
+async function dealSequence(bet){
   state.bet = bet;
+  if(bet > state.credits){ statusEl.textContent = 'Not enough credits'; return; }
   state.credits -= bet; saveCredits();
   state.deck = newDeck();
-  state.player = [state.deck.pop(), state.deck.pop()];
-  state.dealer = [state.deck.pop(), state.deck.pop()];
+  state.player = []; state.dealer = [];
   state.inRound = true;
-  renderHands();
   hitBtn.disabled = false; standBtn.disabled = false; dealBtn.disabled = true;
-  statusEl.textContent = 'Round started — your move';
-  pushLog({ event:'deal', note:`Bet ₹${bet}`, round: {player: state.player, dealer_visible: [state.dealer[0]]} });
-  // fast blackjack check
+  statusEl.textContent = 'Dealing...';
+  pushLog({ event:'round_start', note: `Bet ₹${bet}`});
+  // positions: target containers (player & dealer). We'll compute each card's target element
+  // Clear UI hands first
+  dealerHandEl.innerHTML = ''; playerHandEl.innerHTML = '';
+  dealerValueEl.textContent = 'Value: ?'; playerValueEl.textContent = 'Value: 0';
+  const deckCenter = getDeckCenter();
+
+  // Deal order: player, dealer (face-down second), player, dealer (hole face-down for dealer's second card)
+  // We'll animate 4 times, creating floating card elements
+  const order = [
+    { to: playerHandEl, card: state.deck.pop(), face:true },
+    { to: dealerHandEl, card: state.deck.pop(), face:false }, // dealer first card face-up
+    { to: playerHandEl, card: state.deck.pop(), face:true },
+    { to: dealerHandEl, card: state.deck.pop(), face:false }  // dealer hole as back (hidden)
+  ];
+
+  for(let i=0;i<order.length;i++){
+    const it = order[i];
+    // push logical card
+    if(it.to === playerHandEl) state.player.push(it.card); else state.dealer.push(it.card);
+    // create floating card at deck, animate to position in hand
+    const targetSlot = document.createElement('div'); // invisible placeholder to compute position
+    targetSlot.style.width = '92px'; targetSlot.style.height = '128px';
+    targetSlot.style.display = 'inline-block';
+    it.to.appendChild(targetSlot);
+    await new Promise(r=>requestAnimationFrame(r)); // ensure layout
+    const dest = getTargetPos(targetSlot);
+    const float = makeFloatingCard(cardInnerHTML(it.card, !it.face));
+    const start = deckCenter;
+    // random slight rotation for visual feel
+    const rot = (Math.random()*20 - 10);
+    // set initial small scale
+    float.style.transform = 'scale(0.9)';
+    // animate
+    if(state.sound) playBeep(640,0.05,0.06);
+    await animateMove(float, start, dest, rot);
+    // after move: convert floating element to a static card in the DOM (replace placeholder)
+    const staticCard = document.createElement('div'); staticCard.className='card-el';
+    staticCard.style.position='relative'; staticCard.style.left='auto'; staticCard.style.top='auto'; staticCard.style.transform='none'; staticCard.style.margin='0';
+    staticCard.style.zIndex = '1';
+    staticCard.innerHTML = cardInnerHTML(it.card, !it.face);
+    // remove float and replace placeholder
+    float.remove();
+    targetSlot.remove();
+    it.to.appendChild(staticCard);
+    // small pop animation
+    staticCard.animate([{ transform:'scale(0.85)' },{ transform:'scale(1)' }], { duration:160, easing:'ease-out' });
+    // small delay between cards
+    await new Promise(r => setTimeout(r, 160));
+    renderHandValues();
+  }
+
+  // After initial deal check player blackjack
   const pv = handValue(state.player);
+  const dv = handValue(state.dealer);
   if(pv === 21){
-    // blackjack payout 3:2
+    // blackjack pays 3:2
     const payout = Math.floor(state.bet * 2.5);
     state.credits += payout; saveCredits();
     state.inRound = false;
     statusEl.textContent = `Blackjack! You win ₹${payout}`;
-    pushLog({ event:'blackjack', note:`Blackjack! payout ₹${payout}` });
+    pushLog({ event:'blackjack', note:`Blackjack! payout ₹${payout}`});
     hitBtn.disabled = true; standBtn.disabled = true; dealBtn.disabled = false;
-    renderHands();
+    revealDealerCard(true);
   } else {
-    renderHands();
+    statusEl.textContent = 'Your move — Hit or Stand';
   }
 }
 
-function playerHit(){
+/* reveal dealer hole card (flip) */
+function revealDealerCard(animated=true){
+  // the dealer hand elements are .card-el inside dealerHandEl; the second one may be back face
+  const cards = dealerHandEl.querySelectorAll('.card-el');
+  if(cards.length >= 2){
+    const second = cards[1];
+    // if currently back (card-back present), replace innerHTML to show face
+    if(second.querySelector('.card-back')){
+      const actual = state.dealer[1];
+      if(animated){
+        // flip animation: shrink horizontally then swap
+        second.animate([{ transform:'scaleX(1)' },{ transform:'scaleX(0)' }], { duration:180, easing:'ease-in' })
+          .onfinish = ()=>{
+            second.innerHTML = cardInnerHTML(actual, false);
+            second.animate([{ transform:'scaleX(0)' },{ transform:'scaleX(1)' }], { duration:180, easing:'ease-out' });
+            renderHandValues();
+          };
+      } else {
+        second.innerHTML = cardInnerHTML(actual, false);
+        renderHandValues();
+      }
+    }
+  }
+}
+
+/* update displayed hand values (player always shown; dealer shows ? if inRound) */
+function renderHandValues(){
+  playerValueEl.textContent = 'Value: ' + handValue(state.player);
+  if(state.inRound){
+    dealerValueEl.textContent = 'Value: ?';
+  } else {
+    dealerValueEl.textContent = 'Value: ' + handValue(state.dealer);
+  }
+}
+
+/* Player Hit with animation from deck to player's hand */
+async function playerHit(){
   if(!state.inRound) return;
+  if(state.deck.length === 0) state.deck = newDeck();
   const card = state.deck.pop();
   state.player.push(card);
-  pushLog({ event:'hit', note:`Drew ${card.v}${card.s}` });
-  renderHands();
+  // create placeholder in player hand (as earlier)
+  const placeholder = document.createElement('div'); placeholder.style.width='92px'; placeholder.style.height='128px'; placeholder.style.display='inline-block';
+  playerHandEl.appendChild(placeholder);
+  await new Promise(r=>requestAnimationFrame(r));
+  const start = getDeckCenter();
+  const dest = getTargetPos(placeholder);
+  const float = makeFloatingCard(cardInnerHTML(card,false));
+  if(state.sound) playBeep(700,0.05,0.07);
+  await animateMove(float, start, dest, (Math.random()*14)-7);
+  float.remove();
+  placeholder.remove();
+  const staticCard = document.createElement('div'); staticCard.className='card-el'; staticCard.style.position='relative'; staticCard.style.left='auto'; staticCard.style.top='auto'; staticCard.style.transform='none'; staticCard.style.margin='0'; staticCard.style.zIndex='1';
+  staticCard.innerHTML = cardInnerHTML(card,false);
+  playerHandEl.appendChild(staticCard);
+  renderHandValues();
+  pushLog({ event:'hit', note:`Drew ${card.v}${card.s}`});
   const pv = handValue(state.player);
   if(pv > 21){
     state.inRound = false;
-    statusEl.textContent = `Bust! You lose.`;
-    pushLog({ event:'bust', note:`Player busted ${pv}` });
+    statusEl.textContent = 'Bust! You lose.';
+    pushLog({ event:'bust', note:`Player ${pv}`});
     hitBtn.disabled = true; standBtn.disabled = true; dealBtn.disabled = false;
-    renderHands();
+    revealDealerCard(true);
   } else {
     statusEl.textContent = 'You can hit or stand';
   }
 }
 
-function dealerPlayAndResolve(){
+/* Dealer plays after player stands; animate dealer draws and resolve */
+async function dealerPlayAndResolve(){
   if(!state.inRound) return;
-  // reveal hole and then draw while <17
+  hitBtn.disabled = true; standBtn.disabled = true;
+  // reveal hole first
+  revealDealerCard(true);
+  await new Promise(r=>setTimeout(r,420));
+  // dealer draws until >=17
   while(handValue(state.dealer) < 17){
-    state.dealer.push(state.deck.pop());
+    if(state.deck.length === 0) state.deck = newDeck();
+    const card = state.deck.pop();
+    state.dealer.push(card);
+    // animate from deck to dealerHandEl
+    const placeholder = document.createElement('div'); placeholder.style.width='92px'; placeholder.style.height='128px'; placeholder.style.display='inline-block';
+    dealerHandEl.appendChild(placeholder);
+    await new Promise(r=>requestAnimationFrame(r));
+    const start = getDeckCenter();
+    const dest = getTargetPos(placeholder);
+    const float = makeFloatingCard(cardInnerHTML(card,false));
+    if(state.sound) playBeep(520 + Math.random()*120,0.06,0.07);
+    await animateMove(float, start, dest, (Math.random()*16)-8);
+    float.remove(); placeholder.remove();
+    const staticCard = document.createElement('div'); staticCard.className='card-el'; staticCard.style.position='relative'; staticCard.style.left='auto'; staticCard.style.top='auto'; staticCard.style.transform='none'; staticCard.style.margin='0'; staticCard.style.zIndex='1';
+    staticCard.innerHTML = cardInnerHTML(card,false);
+    dealerHandEl.appendChild(staticCard);
+    renderHandValues();
+    pushLog({ event:'dealer_draw', note:`Dealer drew ${card.v}${card.s}`});
+    await new Promise(r=>setTimeout(r,280));
   }
+
+  // resolve outcome
   const dv = handValue(state.dealer);
   const pv = handValue(state.player);
-  let outcome = 'lose', payout = 0;
-  if(pv > 21){ outcome='lose'; payout=0; }
-  else if(dv > 21 || pv > dv){ outcome='win'; payout = Math.floor(state.bet * 2); } // return + win
+  let outcome='lose', payout=0;
+  if(pv > 21) outcome='lose';
+  else if(dv > 21 || pv > dv){ outcome='win'; payout = Math.floor(state.bet * 2); }
   else if(pv === dv){ outcome='push'; payout = state.bet; }
-  else { outcome='lose'; payout=0; }
-  if(outcome === 'win'){ state.credits += payout; }
-  else if(outcome === 'push'){ state.credits += payout; }
+  else outcome='lose';
+  if(outcome === 'win') state.credits += payout;
+  else if(outcome === 'push') state.credits += payout;
   saveCredits();
   state.inRound = false;
-  hitBtn.disabled = true; standBtn.disabled = true; dealBtn.disabled = false;
-  statusEl.textContent = outcome === 'win' ? `You win! Payout ₹${payout}` : outcome === 'push' ? 'Push. Bet refunded.' : `Dealer wins.`;
-  pushLog({ event:'resolve', note:`Outcome: ${outcome}. Player ${pv} vs Dealer ${dv}. Payout ${payout}` });
-  renderHands();
+  statusEl.textContent = outcome === 'win' ? `You win! Payout ₹${payout}` : outcome === 'push' ? 'Push — bet refunded.' : 'Dealer wins.';
+  pushLog({ event:'round_result', note:`Outcome ${outcome}. P:${pv} D:${dv} payout ${payout}`});
+  dealBtn.disabled = false;
 }
 
-/* ---------- UI wire-up ---------- */
-function initGame(){
-  // initial render
-  creditsEl.textContent = state.credits;
+/* ===== UI wiring & helpers ===== */
+function init(){
+  // initial
+  saveCredits();
   renderLogs();
-  renderHands();
+  renderHandValues();
   // attach events
-  dealBtn.addEventListener('click', startRound);
-  hitBtn.addEventListener('click', playerHit);
-  standBtn.addEventListener('click', dealerPlayAndResolve);
-  resetBtn.addEventListener('click', ()=>{
-    if(confirm('Reset credits to ₹1000?')){ state.credits = 1000; saveCredits(); statusEl.textContent='Credits reset'; }
+  dealBtn.addEventListener('click', ()=> {
+    const bet = Math.max(1, Math.floor(Number(betInput.value) || 1));
+    dealSequence(bet).catch(e=>console.error(e));
+  });
+  hitBtn.addEventListener('click', ()=> {
+    playerHit().catch(e=>console.error(e));
+  });
+  standBtn.addEventListener('click', ()=> {
+    dealerPlayAndResolve().catch(e=>console.error(e));
+  });
+  resetBtn.addEventListener('click', ()=> {
+    if(confirm('Reset credits to ₹1000?')){ state.credits = 1000; saveCredits(); statusEl.textContent='Credits reset'; pushLog({ event:'reset_credits' }); }
   });
   exportBtn.addEventListener('click', ()=>{
     const logs = localStorage.getItem('bj_logs') || '[]';
@@ -343,18 +518,27 @@ function initGame(){
     const a = document.createElement('a'); a.href = url; a.download = 'blackjack_logs.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   });
   clearLogsBtn.addEventListener('click', ()=>{ if(confirm('Clear logs?')){ localStorage.removeItem('bj_logs'); renderLogs(); }});
-  toggleSoundBtn.addEventListener('click', ()=>{ state.sound = !state.sound; toggleSoundBtn.textContent = 'Sound: ' + (state.sound ? 'On' : 'Off'); });
-  // keyboard shortcuts for convenience
-  window.addEventListener('keydown',(e)=>{
+  toggleSoundBtn.addEventListener('click', ()=> {
+    state.sound = !state.sound;
+    localStorage.setItem('bj_sound', state.sound ? '1' : '0');
+    toggleSoundBtn.textContent = 'Sound: ' + (state.sound ? 'On' : 'Off');
+  });
+  // chips quick
+  document.querySelectorAll('.chip').forEach(el=>{
+    el.addEventListener('click', ()=> { betInput.value = el.dataset.bet; betInput.focus(); });
+  });
+  // keyboard shortcuts
+  window.addEventListener('keydown', (e)=>{
     if(sessionStorage.getItem('bj_access')!=='1') return;
-    if(e.key === 'h' || e.key === 'H') { if(!hitBtn.disabled) hitBtn.click(); }
-    if(e.key === 's' || e.key === 'S') { if(!standBtn.disabled) standBtn.click(); }
-    if(e.key === 'd' || e.key === 'D') { if(!dealBtn.disabled) dealBtn.click(); }
+    if(e.key === 'h' || e.key === 'H'){ if(!hitBtn.disabled) hitBtn.click(); }
+    if(e.key === 's' || e.key === 'S'){ if(!standBtn.disabled) standBtn.click(); }
+    if(e.key === 'd' || e.key === 'D'){ if(!dealBtn.disabled) dealBtn.click(); }
   });
 }
 
-/* init UI if already unlocked */
-if(sessionStorage.getItem('bj_access')==='1'){ initGame(); }
+/* show initial logs */
+function renderLogs(){ const logs = JSON.parse(localStorage.getItem('bj_logs')||'[]'); logList.innerHTML = logs.slice(0,200).map(l=>`<div class="log-item">[${l.ts}] ${l.event} ${l.note?('- '+l.note):''}</div>`).join(''); }
+
 </script>
 </body>
 </html>

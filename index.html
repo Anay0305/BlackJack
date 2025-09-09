@@ -7,16 +7,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Password screen -->
   <div id="password-screen">
     <h2>Enter Password</h2>
     <input type="password" id="password-input" placeholder="Enter Password">
     <button onclick="checkPassword()">Enter</button>
     <p id="password-message"></p>
+
+    <!-- Balance setup (this was missing) -->
+    <div id="balance-setup" style="display:none; margin-top:20px;">
+      <h3>Set Your Balance (Max ₹200000)</h3>
+      <input type="number" id="balance-input" placeholder="Enter Balance" min="1" max="200000">
+      <button onclick="setBalance()">Start Game</button>
+    </div>
   </div>
 
+  <!-- Game screen -->
   <div id="game-screen" style="display:none;">
     <h1>Blackjack</h1>
-    <div class="balance">Balance: ₹<span id="balance">50000</span></div>
+    <div class="balance">Balance: ₹<span id="balance">0</span></div>
     <div class="table">
       <div class="hand" id="dealer-hand">
         <h2>Dealer</h2>
